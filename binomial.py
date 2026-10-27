@@ -55,10 +55,20 @@ def solve(n):
 
 
 def print_board(model, n):
-    true_vars = {literal for literal in model if literal > 0}
+    true_vars = set()
+    for literal in model:
+        if literal > 0:
+            true_vars.add(literal)
+
     for i in range(1, n + 1):
-        print(" ".join("Q" if var(i, j, n) in true_vars else "."
-                       for j in range(1, n + 1)))
+        row = []
+        for j in range(1, n + 1):
+            variable = var(i, j, n)
+            if variable in true_vars:
+                row.append("Q")
+            else:
+                row.append(".")
+        print(" ".join(row))
 
 
 def solve_n_queens(n):
